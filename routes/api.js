@@ -12,18 +12,27 @@ function ensureAuth(req, res, next){
         var bearer  = bearerHeader.split(" "); 	//bearerHeader is in the form: Bearer token
         bearerToken = bearer[1];
 
-        var decoded = jwt.verify(bearerToken, 'digitalSYNCretismSECRET');
-        if(decoded === "digitalSYNCretism"){
-            next();
-        }
+		console.log(bearerToken);
 
-    } else {
-    	console.warn('authentication failed');
-        return res.status(403).json({
-        	type: false,
-        	data: 'Error: Authentication failed'
-        });
+        jwt.verify(bearerToken, 'digitalSYNCretismSECRET', function (err, decoded){
+	        if(decoded === "digitalSYNCretism"){
+	            return next();
+	        }
+			else{
+			    return res.status(403).json({
+			    	type: false,
+			    	data: 'Error: Wrong Token'
+			    });
+			}
+		});
     }
+	else {
+		console.warn('authentication failed');
+	    return res.status(403).json({
+	    	type: false,
+	    	data: 'Error: No Token'
+	    });
+	}
 }
 
 router.get('/restricted', ensureAuth, function(req, res, next) {

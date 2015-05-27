@@ -25,7 +25,7 @@ router.post('/login', function (req, res){
     else {
         res.status(403).json({
             type: false,
-            data: "authentication failed"
+            data: "Error: authentication failed"
         });
     }
 });
@@ -33,7 +33,7 @@ router.post('/login', function (req, res){
 router.get('/login', function(req, res){
     res.status(404).json({
         type: false,
-        data: "you should try to login with a POST request providing username and password"
+        data: "Error: you should try to login with a POST request providing username and password"
     });
 });
 

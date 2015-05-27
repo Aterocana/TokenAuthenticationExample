@@ -26,7 +26,6 @@ function ensureAuth(req, res, next){
     }
 }
 
-/* GET users listing. */
 router.get('/restricted', ensureAuth, function(req, res, next) {
     return res.status(200).json({
         type: true,
